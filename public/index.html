@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="ja">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Otaku that scales, Professional Player for @PlayVALORANT</title>
+    <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+    <script>
+        let canvas, ctx;
+        let hitsCount = 0;
+        let x, y, r, vx, vy;
+        let audioVolume = 0.5;
+        let circleColor = '#7cd7ee';
+        function drawAnimation() {
+            ctx.fillStyle = '#ddd';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            ctx.beginPath();
+            ctx.fillStyle = circleColor;
+            ctx.arc(x, y, r, 0, Math.PI * 2, false);
+            ctx.fill();
+            x += vx;
+            y += vy;
+            if (x < 0 + r || x > canvas.width - r) {
+                vx = -vx;
+            }
+            if (y < 0 + r || y > canvas.height - r) {
+                vy = -vy;
+            }
+            requestAnimationFrame(drawAnimation);
+            // 円の中心座標出すくんを更新
+            const circleCoords = document.getElementById('circle-coords');
+            circleCoords.innerText = `Circle Coords: x: ${x}, y: ${y}, vx: ${vx}, vy: ${vy}`;
+        };
+
+        function playSound(name) {
+            const audio = new Audio(name);
+            audio.volume = audioVolume;
+            audio.play();
+        }
+
+        window.addEventListener("load", () => {
+            // ボリューム調節するくん
+            let volumeSlider = document.getElementById('volume-slider');
+            volumeSlider.addEventListener("change", function (e) {
+                audioVolume = e.currentTarget.value / 100;
+                console.log(audioVolume);
+                document.getElementById('volume').innerText = 'Volume: ' + Math.round(audioVolume * 100) + '%';
+            });
+            // 色変更するくん
+            let colorPicker = document.getElementById('color-picker');
+            colorPicker.addEventListener("change", watchColorPicker, false);
+            function watchColorPicker(e) {
+                circleColor = e.currentTarget.value;
+                console.log(circleColor);
+            }
+            // Canvas 初期化
+            canvas = document.getElementById("canvas");
+            ctx = canvas.getContext("2d");
+            canvas.addEventListener('mousemove', e => {
+                // エイムの座標出すくんを更新
+                const rect = canvas.getBoundingClientRect();
+                const point = {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+                const circleCoords = document.getElementById('aim-coords');
+                circleCoords.innerText = `Aim Coords: x: ${x}, y: ${y}`;
+            })
+            // Canvas内だけマウスカーソルを十字にしてFPSぽくする
+            canvas.addEventListener("mouseenter", e => {
+                canvas.style.cursor = "crosshair";
+            });
+            // 円座標を打ち込む
+            x = 100; y = 50; r = 25;
+            vx = 5; vy = 3;
+            // 円のクリックハンドラ
+            canvas.addEventListener("click", e => {
+                const rect = canvas.getBoundingClientRect();
+                const point = {
+                    x: e.clientX - rect.left,
+                    y: e.clientY - rect.top
+                };
+
+                if (Math.pow(x - point.x, 2) + Math.pow(y - point.y, 2) <= Math.pow(r, 2)) {
+                    hitsCount++;
+                    if (hitsCount % 5 === 0) {
+                        playSound('assets/ace.mp3');
+                    } else {
+                        playSound('assets/kill.mp3');
+                    }
+                    document.getElementById('hits').innerText = 'Hits: ' + hitsCount;
+                }
+            });
+            drawAnimation();
+        });
+
+    </script>
+</head>
+
+<body>
+    <div id="root">
+        <h1>Otaku that scales, Professional Player for @PlayVALORANT</h1>
+        <div>
+            <p>音量調整するくん（音でかいので低め推奨）</p>
+            <p id="volume">Volume: 50%</p>
+            <input type="range" id="volume-slider" />
+        </div>
+        <div>
+            <input type="color" id="color-picker" name="color-picker" value="#7cd7ee">
+            <label for="head">色選ぶくん</label>
+        </div>
+        <div>
+            <p id="hits">Hits: 0</p>
+            <a href="https://twitter.com/share" class="twitter-share-button"
+                data-text="Otaku that scales, Professional Player for @PlayVALORANT" data-show-count="false">Tweet</a>
+        </div>
+        <canvas id="canvas" width="500" height="500"></canvas>
+        <p id='circle-coords'>Circle Coords:</p>
+        <p id='aim-coords'>Aim Coords:</p>
+        <a href="https://github.com/iamtakagi/vamos">Source Code</a>
+    </div>
+</body>
+
+</html>
