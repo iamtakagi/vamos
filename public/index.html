@@ -12,7 +12,12 @@
         let x, y, r, vx, vy;
         let audioVolume = 0.5;
         let circleColor = '#7cd7ee';
+        // FPS表示用
+		let fps = 0;
+		let frame = 0;
+		let startTime, endTime;
         function drawAnimation() {
+            frame ++;
             ctx.fillStyle = '#ddd';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
@@ -27,10 +32,21 @@
             if (y < 0 + r || y > canvas.height - r) {
                 vy = -vy;
             }
-            requestAnimationFrame(drawAnimation);
             // 円の中心座標出すくんを更新
             const circleCoords = document.getElementById('circle-coords');
             circleCoords.innerText = `Circle Coords: x: ${x}, y: ${y}, vx: ${vx}, vy: ${vy}`;
+            // FPS表示
+			ctx.font = "32px sans-serif";
+			ctx.fillStyle = "#555";
+			ctx.fillText(fps + " FPS", 190, 250);
+			// 計測
+			endTime = new Date().getTime();
+			if(endTime - startTime >= 1000){
+				fps = frame;
+				frame = 0;
+				startTime = new Date().getTime();
+			}
+            requestAnimationFrame(drawAnimation);
         };
 
         function playSound(path) {
@@ -92,6 +108,7 @@
                     document.getElementById('hits').innerText = 'Hits: ' + hitsCount;
                 }
             });
+			startTime = new Date().getTime();
             drawAnimation();
         });
 
