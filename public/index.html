@@ -16,7 +16,7 @@
         let fps = 0;
         let frame = 0;
         let startTime, endTime;
-        function drawAnimation() {
+        const drawAnimation = () => {
             frame++;
             ctx.fillStyle = '#ddd';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
@@ -48,7 +48,7 @@
             requestAnimationFrame(drawAnimation);
         };
 
-        function playSound(path) {
+        const playSound = (path) => {
             const audio = new Audio(path);
             audio.volume = audioVolume;
             audio.play();
@@ -56,14 +56,14 @@
 
         window.addEventListener("load", () => {
             // ボリューム調節するくん
-            let volumeSlider = document.getElementById('volume-slider');
+            const volumeSlider = document.getElementById('volume-slider');
             volumeSlider.addEventListener("change", function (e) {
                 audioVolume = e.currentTarget.value / 100;
                 console.log(audioVolume);
                 document.getElementById('volume').innerText = 'Volume: ' + Math.round(audioVolume * 100) + '%';
             });
             // 色変更するくん
-            let colorPicker = document.getElementById('color-picker');
+            const colorPicker = document.getElementById('color-picker');
             colorPicker.addEventListener("change", function (e) {
                 circleColor = e.currentTarget.value;
                 console.log(circleColor);
