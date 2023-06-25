@@ -64,11 +64,10 @@
             });
             // 色変更するくん
             let colorPicker = document.getElementById('color-picker');
-            colorPicker.addEventListener("change", watchColorPicker, false);
-            function watchColorPicker(e) {
+            colorPicker.addEventListener("change", function (e) {
                 circleColor = e.currentTarget.value;
                 console.log(circleColor);
-            }
+            }, false);
             // Canvas 初期化
             canvas = document.getElementById("canvas");
             ctx = canvas.getContext("2d");
