@@ -36,9 +36,9 @@
             const circleCoords = document.getElementById('circle-coords');
             circleCoords.innerText = `Circle Coords: x: ${x}, y: ${y}, vx: ${vx}, vy: ${vy}`;
             // FPS表示するくん
-            ctx.font = "32px sans-serif";
+            ctx.font = "24px sans-serif";
             ctx.fillStyle = "#555";
-            ctx.fillText(fps + " FPS", 190, 250);
+            ctx.fillText(fps + " fps", 420, 485);
             endTime = new Date().getTime();
             if (endTime - startTime >= 1000) {
                 fps = frame;
