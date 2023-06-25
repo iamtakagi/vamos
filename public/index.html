@@ -33,8 +33,8 @@
             circleCoords.innerText = `Circle Coords: x: ${x}, y: ${y}, vx: ${vx}, vy: ${vy}`;
         };
 
-        function playSound(name) {
-            const audio = new Audio(name);
+        function playSound(path) {
+            const audio = new Audio(path);
             audio.volume = audioVolume;
             audio.play();
         }
