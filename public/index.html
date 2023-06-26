@@ -57,14 +57,14 @@
         window.addEventListener("load", () => {
             // ボリューム調節するくん
             const volumeSlider = document.getElementById('volume-slider');
-            volumeSlider.addEventListener("change", function (e) {
+            volumeSlider.addEventListener("change", (e) => {
                 audioVolume = e.currentTarget.value / 100;
                 console.log(audioVolume);
                 document.getElementById('volume').innerText = 'Volume: ' + Math.round(audioVolume * 100) + '%';
             });
             // 色変更するくん
             const colorPicker = document.getElementById('color-picker');
-            colorPicker.addEventListener("change", function (e) {
+            colorPicker.addEventListener("change", (e) => {
                 circleColor = e.currentTarget.value;
             }, false);
             // Canvas 初期化
@@ -81,7 +81,7 @@
                 aimCoords.innerText = `Aim Coords: x: ${point.x}, y: ${Math.round(point.y)}`;
             })
             // Canvas内だけマウスカーソルを十字にしてFPSぽくする
-            canvas.addEventListener("mouseenter", e => {
+            canvas.addEventListener("mouseenter", (e) => {
                 canvas.style.cursor = "crosshair";
             });
             // 円座標を打ち込む
