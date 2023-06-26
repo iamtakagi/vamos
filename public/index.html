@@ -12,15 +12,16 @@
         let x, y, r, vx, vy;
         let audioVolume = 0.5;
         let circleColor = '#7cd7ee';
-        // FPS表示用
         let fps = 0;
         let frame = 0;
         let startTime, endTime;
         const drawAnimation = () => {
             frame++;
+            // background
             ctx.fillStyle = '#ddd';
             ctx.fillRect(0, 0, canvas.width, canvas.height);
             ctx.beginPath();
+            // circle
             ctx.fillStyle = circleColor;
             ctx.arc(x, y, r, 0, Math.PI * 2, false);
             ctx.fill();
