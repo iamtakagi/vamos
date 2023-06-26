@@ -79,7 +79,7 @@
                     y: e.clientY - rect.top
                 };
                 const aimCoords = document.getElementById('aim-coords');
-                aimCoords.innerText = `Aim Coords: x: ${x}, y: ${y}`;
+                aimCoords.innerText = `Aim Coords: x: ${point.x}, y: ${Math.round(point.y)}`;
             })
             // Canvas内だけマウスカーソルを十字にしてFPSぽくする
             canvas.addEventListener("mouseenter", e => {
